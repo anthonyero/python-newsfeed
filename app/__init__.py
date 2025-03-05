@@ -1,3 +1,4 @@
+from app.routes import home
 from flask import Flask
 
 def create_app(test_config=None):
