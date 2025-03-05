@@ -1,0 +1,1 @@
+from .home import bp as home # Import the Blueprint object, which contains the routes within it, and rename it `home`
