@@ -1,6 +1,9 @@
 from app.db import Base # Import the Base class
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import validates
+import bcrypt
+
+salt = bcrypt.gensalt()
 
 class User(Base): # Here we are creating a User class that inherits from the Base class
   __tablename__ = 'users'
@@ -12,7 +15,7 @@ class User(Base): # Here we are creating a User class that inherits from the Bas
   @validates('email')
   def validate_email(self, key, email):
     # Make sure email address contains @ character
-    assert '@' in email # `assert` prompts a check. Will automaticallythrow an error if the condition is false, preventing the `return` statement from being called
+    assert '@' in email # `assert` prompts a check. Will automatically throw an error if the condition is false, preventing the `return` statement from being called
 
     return email
 
@@ -20,4 +23,5 @@ class User(Base): # Here we are creating a User class that inherits from the Bas
   def validate_password(self, key, password):
     assert len(password) > 4 # Check if the password length is fewer than 4 characters and throw an error if so
 
-    return password
+    # Encrypt password
+    return bcrypt.hashpw(password.encode('utf-8'), salt) # Returns an encrypted version of the password if the `assert` doesn't throw an error
