@@ -15,3 +15,9 @@ class User(Base): # Here we are creating a User class that inherits from the Bas
     assert '@' in email # `assert` prompts a check. Will automaticallythrow an error if the condition is false, preventing the `return` statement from being called
 
     return email
+
+  @validates('password')
+  def validate_password(self, key, password):
+    assert len(password) > 4 # Check if the password length is fewer than 4 characters and throw an error if so
+
+    return password
