@@ -10,3 +10,6 @@ load_dotenv() # Call `load_dotenv()` from the `python-dotenv` module to access o
 engine = create_engine(getenv('DB_URL'), echo=True, pool_size=20, max_overflow=0) # Manages the overall connection to the database
 Session = sessionmaker(bind=engine) # Generates temporary connections for performing CRUD operations
 Base = declarative_base() # This class variable helps us map the models to real MySQL tables
+
+def init_db():
+  Base.metadata.create_all(engine)
