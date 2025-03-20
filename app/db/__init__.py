@@ -13,3 +13,6 @@ Base = declarative_base() # This class variable helps us map the models to real 
 
 def init_db():
   Base.metadata.create_all(engine)
+
+def get_db():
+  return Session() # Returns a new session-connection object
