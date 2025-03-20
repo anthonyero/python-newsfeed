@@ -3,6 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
+from flask import g # Import the global variable g object for Flask application context
 
 load_dotenv() # Call `load_dotenv()` from the `python-dotenv` module to access our `.env` file
 
@@ -15,4 +16,8 @@ def init_db():
   Base.metadata.create_all(engine)
 
 def get_db():
-  return Session() # Returns a new session-connection object
+  if 'db' not in g:
+    # Store db connection in app context
+    g.db = Session()
+
+  return g.db
