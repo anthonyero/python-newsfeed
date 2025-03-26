@@ -1,11 +1,20 @@
 from flask import Blueprint, render_template # Imports the Blueprint and render_template functions from the Flask module
+from app.models import Post
+from app.db import get_db
 
 bp = Blueprint('home', __name__, url_prefix='/') # Blueprint() lets us consolidate routes onto a single `p` object that the parent app can register later. This corresponds to using the `Router` middleware of Express.js
 
 # Defining a few routes
 @bp.route('/')
 def index():
-  return render_template('homepage.html') # Using the `render_template()` function allows us to respond with a template instead of a string. 
+  # Get all posts
+  db = get_db() # Returns a section connection that's tied to this route's context
+  posts = db.query(Post).order_by(Post.created_at.desc()).all() # Query method on the connection object to query the `Post` model for all posts in descending order
+
+  return render_template(
+    'homepage.html', 
+    posts=posts
+  ) # Using the `render_template()` function allows us to respond with a template instead of a string. 
 
 @bp.route('/login')
 def login():
