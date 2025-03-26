@@ -21,3 +21,9 @@ def get_db():
     g.db = Session()
 
   return g.db
+
+def close_db(e=None):
+  db = g.pop('db', None) # Find and removes `db` from the `g` object
+
+  if db is not None: # If `db` exists, then `db.close` will end the connection
+    db.close()
