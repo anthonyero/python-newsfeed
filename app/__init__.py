@@ -18,6 +18,6 @@ def create_app(test_config=None):
   app.register_blueprint(home)
   app.register_blueprint(dashboard)
 
-  init_db()
+  init_db(app) # Now that we have modified `init_db` to invoke the `close_db` function and passed `app` as an argument, we no longer have to worry about connections remaining open and potentially locking up the server
 
   return app
