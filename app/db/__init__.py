@@ -15,6 +15,8 @@ Base = declarative_base() # This class variable helps us map the models to real 
 def init_db():
   Base.metadata.create_all(engine)
 
+  app.teardown_appcontext(close_db) # Flask will run `close_db()` together with its built-in `teardown_appcontext()` method. 
+
 def get_db():
   if 'db' not in g:
     # Store db connection in app context
