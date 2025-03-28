@@ -12,10 +12,10 @@ engine = create_engine(getenv('DB_URL'), echo=True, pool_size=20, max_overflow=0
 Session = sessionmaker(bind=engine) # Generates temporary connections for performing CRUD operations
 Base = declarative_base() # This class variable helps us map the models to real MySQL tables
 
-def init_db():
+def init_db(app): # Passing `app` as a parameter
   Base.metadata.create_all(engine)
 
-  app.teardown_appcontext(close_db) # Flask will run `close_db()` together with its built-in `teardown_appcontext()` method. 
+  app.teardown_appcontext(close_db) # Flask will run `close_db()` together with its built-in `teardown_appcontext()` method
 
 def get_db():
   if 'db' not in g:
