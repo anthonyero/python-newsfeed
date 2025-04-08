@@ -25,7 +25,9 @@ def signup():
   except:
     # Insert failed, send error to the command line for internal review using the `sys` module
     print(sys.exc_info()[0]) # Tried using `exe_info` but this is not in `sys` and `exc_info` was the recommended correction
-    # Insert failed, so send error to the front end
+    
+    # Insert failed, so rollback and send error to the front end
+    db.rollback() # Rollback to prevent connections remaining in a pending state if `db.commit()` fails
     return jsonify(message = 'Signup failed'), 500  
 
   return jsonify(id = newUser.id) # Returns a JSON object to the user/command line
