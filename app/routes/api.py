@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify # Request is another global contextual object that contains information about the request itself
 from app.models import User
 from app.db import get_db
+import sys
 
 bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -22,6 +23,8 @@ def signup():
     db.add(newUser) # Preps the `INSERT` statement
     db.commit() # Officially updates the database
   except:
+    # Insert failed, send error to the command line for internal review using the `sys` module
+    print(sys.exc_info()[0]) # Tried using `exe_info` but this is not in `sys` and `exc_info` was the recommended correction
     # Insert failed, so send error to the front end
     return jsonify(message = 'Signup failed'), 500  
 
