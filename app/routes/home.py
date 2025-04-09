@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, session, redirect
 from app.db import get_db
+from app.models import Post
 
 bp = Blueprint('home', __name__, url_prefix='/') # Blueprint() lets us consolidate routes onto a single `p` object that the parent app can register later. This corresponds to using the `Router` middleware of Express.js
 
