@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify # Request is another global contextual object that contains information about the request itself
+from flask import Blueprint, request, jsonify, session # Request is another global contextual object that contains information about the request itself
 from app.models import User
 from app.db import get_db
 import sys
@@ -29,5 +29,10 @@ def signup():
     # Insert failed, so rollback and send error to the front end
     db.rollback() # Rollback to prevent connections remaining in a pending state if `db.commit()` fails
     return jsonify(message = 'Signup failed'), 500  
+
+  # This clears any existing session data and creates two new session properties
+  session.clear()
+  session['user_id'] = newUser.id
+  session['loggedIn'] = True
 
   return jsonify(id = newUser.id) # Returns a JSON object to the user/command line
