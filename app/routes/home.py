@@ -19,7 +19,11 @@ def index():
 
 @bp.route('/login')
 def login():
-  return render_template('login.html')
+  # If a user is not logged in yet
+  if session.get('loggedIn') is None:
+    return render_template('login.html')
+
+  return redirect('/dashboard')
 
 @bp.route('/post/<id>') # This route uses a parameter. In the URL `<id>` represents the parameter
 def single(id): # To capture the value, we include it as a function parameter - specifically, `single(id)`
