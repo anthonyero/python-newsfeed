@@ -36,3 +36,10 @@ def signup():
   session['loggedIn'] = True
 
   return jsonify(id = newUser.id) # Returns a JSON object to the user/command line
+
+# Will resolve to the `/api/users/logout` endpoint
+@bp.route('/users/logout', methods=['POST'])
+def logout():
+  # Remove session variables
+  session.clear()
+  return '', 204
