@@ -43,3 +43,27 @@ def logout():
   # Remove session variables
   session.clear()
   return '', 204
+
+@bp.route('/users/login', methods=['POST'])
+def login():
+  data = request.get_json()
+  db = get_db()
+
+  # Attempt to retrieve a user from the database using the user supplied email address
+  try:
+    user = db.query(User).filter(User.email == data['email']).one()
+  except:
+    print(sys.exc_info()[0])
+
+    return jsonify(message = 'Incorrect credentials'), 400
+
+  # Upon successful retrieval of a user, verify the password that they provided. This utilizes the `verify_password' method we defined to the User class/model
+  if user.verify_password(data['password']) == False:
+    return jsonify(message = 'Incorrect credentials'), 400
+
+  # At this point, we will have found a user in the database and verified their password, therefore we want to create a session
+  session.clear() 
+  session['user_id'] = user.id
+  session['loggedIn'] = True
+
+  return jsonify(id = user.id)
