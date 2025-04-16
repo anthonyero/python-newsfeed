@@ -25,3 +25,9 @@ class User(Base): # Here we are creating a User class that inherits from the Bas
 
     # Encrypt password
     return bcrypt.hashpw(password.encode('utf-8'), salt) # Returns an encrypted version of the password if the `assert` doesn't throw an error
+
+  def verify_password(self, password):
+    return bcrypt.checkpw(
+      password.encode('utf-8'),
+      self.password.encode('utf-8')
+    )
