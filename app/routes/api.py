@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify, session # Request is another global contextual object that contains information about the request itself
-from app.models import User
+from app.models import User, Post, Comment, Vote
 from app.db import get_db
 import sys
 
