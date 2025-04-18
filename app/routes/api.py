@@ -153,7 +153,7 @@ def update(id):
 
   return '', 204
 
-@bp.route('/posts/<id>', method=['DELETE'])
+@bp.route('/posts/<id>', methods=['DELETE'])
 def delete(id):
   db = get_db()
 
