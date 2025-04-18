@@ -160,6 +160,7 @@ def delete(id):
   try:
     # Delete post from db
     db.delete(db.query(Post).filter(Post.id == id).one())
+    db.commit()
   except:
     print(sys.exc_info()[0])
 
